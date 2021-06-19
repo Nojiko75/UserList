@@ -5,7 +5,7 @@ import java.lang.Exception
 sealed class Result<out T> {
 
 data class Success<out T>(val successData : T) : Result<T>()
-data class Failure(private val apiError: ApiError)
+data class Failure(val apiError: ApiError)
     : Result<Nothing>()
 }
 
