@@ -1,5 +1,5 @@
 plugins {
-    id 'com.android.application'
+    id 'com.android.library'
     id 'kotlin-android'
     id 'kotlin-kapt'
 }
@@ -7,8 +7,11 @@ plugins {
 android {
     compileSdkVersion 30
 
+    buildFeatures {
+        viewBinding true
+    }
+
     defaultConfig {
-        applicationId "com.example.data"
         minSdkVersion 21
         targetSdkVersion 30
         versionCode 1
@@ -38,6 +41,7 @@ dependencies {
     // Retrofit2 to call external APIs
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
+    implementation "com.squareup.okhttp3:logging-interceptor:$okhttp3LogInterceptor"
 
     // OkHTTP as a HTTP client
     implementation "com.squareup.okhttp3:okhttp:$okhttp_version"
@@ -57,7 +61,17 @@ dependencies {
     implementation 'androidx.core:core-ktx:1.5.0'
     implementation 'androidx.appcompat:appcompat:1.3.0'
     implementation 'com.google.android.material:material:1.3.0'
-    testImplementation 'junit:junit:4.+'
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test:runner:1.3.0'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    //for testing retrofit.
+    testImplementation 'com.squareup.okhttp3:mockwebserver:4.7.2'
+    // Koin testing tools
+    androidTestImplementation 'org.koin:koin-test:2.0.1'
+    // Needed JUnit version
+    //androidTestImplementation 'org.koin:koin-test-junit4:2.0.1'
+    //testImplementation "org.mockito.kotlin:mockito-kotlin:3.2.0"
+    testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:$mockito_version"
+
 }

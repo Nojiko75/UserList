@@ -7,25 +7,16 @@ import com.example.domain.model.UserFullProfile
 
 @Entity(tableName = "Users")
 data class UserEntity (
-    @PrimaryKey(autoGenerate = true) val id: Int,
-    val title: String,
-    val firstName: String,
+    @PrimaryKey val id: String,
     val lastName: String,
-    val gender: String,
+    val firstName: String,
     val email: String,
-    val dateOfBirth: String,
-    val registerDate: String,
-    val phone: String,
-    val picture: String,
-    val location: Location
+    val title: String,
+    val picture: String
 ) {
     fun toUserFullProfile() = UserFullProfile (
-        name = "$title $firstName $lastName",
-        gender = gender,
+        name = "$title $lastName $firstName",
         email = email,
-        dateOfBirth = dateOfBirth,
-        registerDate = registerDate,
-        phone = phone,
         picture = picture
     )
 }

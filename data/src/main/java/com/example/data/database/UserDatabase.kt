@@ -9,7 +9,7 @@ import com.example.data.database.dao.UserDao
 import com.example.data.database.model.UserEntity
 
 @Database(
-    entities = [UserEntity::class, Location::class],
+    entities = [UserEntity::class],
     version = 1, exportSchema = false
 )
 
