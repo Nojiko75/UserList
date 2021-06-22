@@ -1,5 +1,6 @@
 package com.example.data.database.dao
 
+import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.data.database.UserDatabase
 import com.example.data.database.databaseTestModule
@@ -9,7 +10,9 @@ import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.loadKoinModules
+import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.koin.test.KoinTest
 import org.koin.test.inject
@@ -22,6 +25,7 @@ class UserDaoTest : KoinTest {
 
     @Before
     fun before() {
+        startKoin { androidContext(ApplicationProvider.getApplicationContext()) }
         loadKoinModules(databaseTestModule)
     }
 

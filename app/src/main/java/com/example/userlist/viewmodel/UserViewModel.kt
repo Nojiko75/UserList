@@ -16,7 +16,7 @@ class UserViewModel(private val userRepository: UserRepository) : ViewModel() {
         viewModelScope.launch {
             when (val result = userRepository.getUserList()) {
                 is Result.Success -> userList.value = result.successData
-                is Result.Failure -> result.apiError.message
+                is Result.Failure -> result.exception.localizedMessage
             }
         }
     }

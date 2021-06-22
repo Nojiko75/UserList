@@ -1,22 +1,22 @@
 package com.example.data.repository
 
-import android.content.Context
 import com.example.data.api.UserApi
+import com.example.data.api.util.handleFailure
 import com.example.data.database.dao.UserDao
 import com.example.domain.model.*
 import com.example.domain.repository.UserRepository
-import com.example.data.util.NetworkManager.hasNetworkConnection
+import com.example.data.util.NetworkStateManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 class UserRepositoryImpl (
     private val userApi: UserApi,
     private val userDao: UserDao,
-    private val context: Context
+    private val networkStateManager: NetworkStateManager
 ) : UserRepository {
 
     override suspend fun getUserList(): Result<List<UserFullProfile>> {
-        if (hasNetworkConnection(context)) {
+        if (networkStateManager.hasNetWorkConnection()) {
             return try {
                 val response = userApi.getUserList()
                 if (response.isSuccessful) {
@@ -27,12 +27,12 @@ class UserRepositoryImpl (
                         val userFullProfileList = userList.map { it.toUserFullProfile() }
 
                         return Result.Success(userFullProfileList)
-                    } ?: return Result.Failure(ApiError(Exception("error"), "error"))
+                    } ?: handleFailure(response)
                 } else {
-                    return Result.Failure(ApiError(Exception("error"), "error"))
+                    handleFailure(response)
                 }
             } catch (e: Exception) {
-                return Result.Failure(ApiError(e, e.localizedMessage))
+                return Result.Failure(e, e.localizedMessage)
             }
         } else {
             val data = withContext(Dispatchers.IO) { userDao.findAllUsers() }
@@ -40,7 +40,7 @@ class UserRepositoryImpl (
                 val userFullProfileList = data.map { it.toUserFullProfile() }
                 Result.Success(userFullProfileList)
             } else {
-                Result.Failure(ApiError(Exception("error"), "error"))
+                Result.Failure(Exception("error"), "no network connection")
             }
         }
     }
