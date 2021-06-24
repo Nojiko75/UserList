@@ -49,8 +49,9 @@ class UserRepositoryImplTest {
 
     @Test
     fun get_user_list_without_connection_should_fail() {
+        // xingqiu , lisa (diona), noelle, yanfei
         runBlocking {
-            whenever(networkStateManagerMock.hasNetWorkConnection()).thenReturn(true)
+            whenever(networkStateManagerMock.hasNetWorkConnection()).thenReturn(false)
             whenever(userApiMock.getUserList())
                 .thenReturn(
                     Response.error(500, "no network connection".toResponseBody("text".toMediaTypeOrNull())))

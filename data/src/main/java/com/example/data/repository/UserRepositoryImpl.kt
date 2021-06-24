@@ -1,5 +1,6 @@
 package com.example.data.repository
 
+import android.util.Log
 import com.example.data.api.UserApi
 import com.example.data.api.util.handleFailure
 import com.example.data.database.dao.UserDao
@@ -20,11 +21,14 @@ class UserRepositoryImpl (
             return try {
                 val response = userApi.getUserList()
                 if (response.isSuccessful) {
+                    Log.d("REPO", "get users from api")
                     response.body()?.let { userResponse ->
-                        val userList = userResponse.user
-                        withContext(Dispatchers.IO) { userDao.addUsers(userList) }
+                        Log.d("REPO", "response:$response")
+                        val userList = userResponse.data
+                        val entities = userList.map { it.toUserEntity() }
+                        withContext(Dispatchers.IO) { userDao.addUsers(entities) }
 
-                        val userFullProfileList = userList.map { it.toUserFullProfile() }
+                        val userFullProfileList = entities.map { it.toUserFullProfile() }
 
                         return Result.Success(userFullProfileList)
                     } ?: handleFailure(response)
@@ -37,6 +41,7 @@ class UserRepositoryImpl (
         } else {
             val data = withContext(Dispatchers.IO) { userDao.findAllUsers() }
             return if (data.isNotEmpty()) {
+                Log.d("REPO", "get users from db")
                 val userFullProfileList = data.map { it.toUserFullProfile() }
                 Result.Success(userFullProfileList)
             } else {
