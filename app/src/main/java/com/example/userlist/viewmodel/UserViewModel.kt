@@ -12,7 +12,7 @@ class UserViewModel(private val userRepository: UserRepository) : ViewModel() {
 
     val userList = MutableLiveData<List<UserFullProfile>>()
 
-    suspend fun getUserList() {
+    fun getUserList() {
         viewModelScope.launch {
             when (val result = userRepository.getUserList()) {
                 is Result.Success -> userList.value = result.successData
