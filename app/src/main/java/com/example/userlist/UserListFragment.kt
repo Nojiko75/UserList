@@ -17,7 +17,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class UserListFragment : Fragment(), UserClickListener {
     private val userViewModel by viewModel<UserViewModel>()
-    private lateinit var adapter: UserRecyclerAdapter
+    private lateinit var userAdapter: UserRecyclerAdapter
     private lateinit var viewDataBinding: FragmentUserListBinding
 
     override fun onCreateView(
@@ -33,9 +33,9 @@ class UserListFragment : Fragment(), UserClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        adapter = UserRecyclerAdapter(context, this)
         recyclerView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
-        recyclerView.adapter = adapter
+        userAdapter = UserRecyclerAdapter(context, this)
+        recyclerView.adapter = userAdapter
         recyclerView.isNestedScrollingEnabled = false
 
         viewDataBinding.viewModel = userViewModel
@@ -43,7 +43,7 @@ class UserListFragment : Fragment(), UserClickListener {
         userViewModel.getUserList()
         userViewModel.userList.observe(viewLifecycleOwner, { userList ->
             if (userList.isNotEmpty() && userList != null) {
-                adapter.setUsers(userList)
+                userAdapter.setUsers(userList)
             }
         })
     }
