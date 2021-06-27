@@ -7,10 +7,11 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.domain.model.UserFullProfile
+import com.example.domain.model.UserListItem
 import com.example.userlist.databinding.FragmentUserListBinding
 import com.example.userlist.ui.UserClickListener
 import com.example.userlist.ui.UserRecyclerAdapter
+import com.example.userlist.util.replaceFragment
 import com.example.userlist.viewmodel.UserViewModel
 import kotlinx.android.synthetic.main.fragment_user_list.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -48,7 +49,13 @@ class UserListFragment : Fragment(), UserClickListener {
         })
     }
 
-    override fun onItemClick(user: UserFullProfile) {
-        TODO("Not yet implemented")
+    override fun onItemClick(user: UserListItem) {
+        userViewModel.getUserFullProfile(user.id)
+        userViewModel.userFullProfile.observe(viewLifecycleOwner, { userFullProfile ->
+            if (userFullProfile !=  null) {
+                (activity as MainActivity).replaceFragment(UserFullProfileFragment.newInstance(userFullProfile),
+                    R.id.fragment_layout, "userFullProfile")
+            }
+        })
     }
 }

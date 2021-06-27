@@ -44,6 +44,10 @@ class UserRecyclerAdapter(
                 .error(R.drawable.ic_launcher_background)
                 .into(v.picture)
             v.userClickInterface = clickListener
+
+            v.root.setOnClickListener {
+                clickListener.onItemClick(item)
+            }
         }
 
         /*private var user: UserFullProfile? = null

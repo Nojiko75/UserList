@@ -23,12 +23,14 @@ data class UserEntity (
     val updatedAt: String?
 ) {
     fun toUserListItem() = UserListItem (
+        id = id,
         name = "$title $firstName $lastName",
         email = email,
         picture = picture
     )
 
     fun toUserFullProfile() = UserFullProfile (
+        id = id,
         name = "$title $firstName $lastName",
         gender = gender,
         email = email,
@@ -36,7 +38,7 @@ data class UserEntity (
         registerDate = registerDate,
         phone = phone,
         picture = picture,
-        location = null,
+        location = "${location?.country} ${location?.state} ${location?.city} ${location?.street}",
         updatedAt = updatedAt
     )
 }

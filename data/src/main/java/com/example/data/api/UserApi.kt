@@ -4,6 +4,7 @@ import com.example.data.api.model.UserFullProfileResponse
 import com.example.data.api.model.UserListResponse
 import retrofit2.Response
 import retrofit2.http.GET
+import retrofit2.http.Path
 
 interface UserApi {
 
@@ -11,5 +12,5 @@ interface UserApi {
     suspend fun getUserList() : Response<UserListResponse>
 
     @GET("user/{userId}")
-    suspend fun getUserFullProfile(userId: String) : Response<UserFullProfileResponse>
+    suspend fun getUserFullProfile(@Path("userId") userId: String) : Response<UserFullProfileResponse>
 }

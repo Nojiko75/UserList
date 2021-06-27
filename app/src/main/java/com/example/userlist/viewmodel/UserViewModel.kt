@@ -12,11 +12,21 @@ import kotlinx.coroutines.launch
 class UserViewModel(private val userRepository: UserRepository) : ViewModel() {
 
     val userList = MutableLiveData<List<UserListItem>>()
+    var userFullProfile = MutableLiveData<UserFullProfile>()
 
     fun getUserList() {
         viewModelScope.launch {
             when (val result = userRepository.getUserList()) {
                 is Result.Success -> userList.value = result.successData
+                is Result.Failure -> result.exception.localizedMessage
+            }
+        }
+    }
+
+    fun getUserFullProfile(userId: String) {
+        viewModelScope.launch {
+            when (val result = userRepository.getUserFullProfile(userId)) {
+                is Result.Success -> userFullProfile.value = result.successData
                 is Result.Failure -> result.exception.localizedMessage
             }
         }

@@ -1,7 +1,7 @@
 package com.example.userlist.ui
 
-import com.example.domain.model.UserFullProfile
+import com.example.domain.model.UserListItem
 
 interface UserClickListener {
-    fun onItemClick(user: UserFullProfile)
+    fun onItemClick(user: UserListItem)
 }

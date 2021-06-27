@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">UserList</string>
+    <string name="gender">Gender: </string>
+    <string name="date_of_birth">Date Of Birth: </string>
+    <string name="register_date">Register Date: </string>
+    <string name="email">Email: </string>
+    <string name="phone">Phone: </string>
+    <string name="address">Address</string>
 </resources>
