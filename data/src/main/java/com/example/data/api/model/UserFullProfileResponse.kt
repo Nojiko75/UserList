@@ -23,7 +23,7 @@ data class UserFullProfileResponse (
         title = title,
         firstName = firstName,
         lastName = lastName,
-        gender = null,
+        gender = gender,
         email = email,
         dateOfBirth = dateOfBirth,
         registerDate = registerDate,
