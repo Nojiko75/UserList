@@ -1,11 +1,9 @@
 package com.example.domain.model
 
+import java.io.Serializable
+
 data class UserListItem (
-    val title: String,
-    val firstName: String,
-    val lastName: String,
+    val name: String,
     val email: String,
-    val dateOfBirth: String,
-    val phone: String,
     val picture: String
-)
+) : Serializable

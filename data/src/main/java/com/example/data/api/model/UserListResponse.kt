@@ -4,10 +4,10 @@ import com.example.data.database.model.UserEntity
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-data class UserResponse (
+data class UserListResponse (
     @SerializedName("data")
     @Expose
-    val data: List<User>,
+    val data: List<UserItem>,
     @SerializedName("total")
     @Expose
     val total: Int,
@@ -22,7 +22,7 @@ data class UserResponse (
     val offset: Int
 )
 
-data class User (
+data class UserItem (
     @SerializedName("id")
     @Expose
     val id: String,
@@ -42,20 +42,18 @@ data class User (
     @Expose
     val picture: String
 ) {
-    fun toUserEntity() = UserEntity(
+    fun toUserEntity() = UserEntity (
         id = id,
         title = title,
         firstName = firstName,
         lastName = lastName,
+        gender = null,
         email = email,
-        picture = picture
+        dateOfBirth = null,
+        registerDate = null,
+        phone = null,
+        picture = picture,
+        location = null,
+        updatedAt = null
     )
 }
-
-data class Location (
-    val street: String,
-    val city: String,
-    val state: String,
-    val country: String,
-    val timezone: String
-)

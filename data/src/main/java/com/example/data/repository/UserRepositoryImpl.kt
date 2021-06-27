@@ -16,7 +16,7 @@ class UserRepositoryImpl (
     private val networkStateManager: NetworkStateManager
 ) : UserRepository {
 
-    override suspend fun getUserList(): Result<List<UserFullProfile>> {
+    override suspend fun getUserList(): Result<List<UserListItem>> {
         if (networkStateManager.hasNetWorkConnection()) {
             return try {
                 val response = userApi.getUserList()
@@ -28,9 +28,9 @@ class UserRepositoryImpl (
                         val entities = userList.map { it.toUserEntity() }
                         withContext(Dispatchers.IO) { userDao.addUsers(entities) }
 
-                        val userFullProfileList = entities.map { it.toUserFullProfile() }
+                        val userItemList = entities.map { it.toUserListItem() }
 
-                        return Result.Success(userFullProfileList)
+                        return Result.Success(userItemList)
                     } ?: handleFailure(response)
                 } else {
                     handleFailure(response)
@@ -42,10 +42,42 @@ class UserRepositoryImpl (
             val data = withContext(Dispatchers.IO) { userDao.findAllUsers() }
             return if (data.isNotEmpty()) {
                 Log.d("REPO", "get users from db")
-                val userFullProfileList = data.map { it.toUserFullProfile() }
-                Result.Success(userFullProfileList)
+                val userItemList = data.map { it.toUserListItem() }
+                Result.Success(userItemList)
             } else {
                 Result.Failure(Exception("error"), "no network connection")
+            }
+        }
+    }
+
+    override suspend fun getUserFullProfile(userId: String): Result<UserFullProfile> {
+        if (networkStateManager.hasNetWorkConnection()) {
+            return try {
+                val response = userApi.getUserFullProfile(userId)
+                if (response.isSuccessful) {
+                    Log.d("REPO", "get users from api")
+                    response.body()?.let { userResponse ->
+                        Log.d("REPO", "response:$userResponse")
+
+                        val userEntity = userResponse.toUserEntity()
+                        withContext(Dispatchers.IO) { userDao.addUserFullProfile(userEntity) }
+
+                        val user = userEntity.toUserFullProfile()
+
+                        return Result.Success(user)
+                    } ?: handleFailure(response)
+                } else {
+                    handleFailure(response)
+                }
+            } catch (e: Exception) {
+                return Result.Failure(e, e.localizedMessage)
+            }
+        } else {
+            val data = withContext(Dispatchers.IO) { userDao.getUserById(userId) }
+            return run {
+                Log.d("REPO", "get users from db")
+                val user = data.toUserFullProfile()
+                Result.Success(user)
             }
         }
     }

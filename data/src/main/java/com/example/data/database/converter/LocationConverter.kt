@@ -1,7 +1,7 @@
 package com.example.data.database.converter
 
 import androidx.room.TypeConverter
-import com.example.data.api.model.Location
+import com.example.domain.model.Location
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
@@ -16,7 +16,7 @@ class LocationConverter {
     }
 
     @TypeConverter
-    fun locationToString(translations: Location): String {
+    fun locationToString(translations: Location?): String {
         return gson.toJson(translations, type)
     }
 }

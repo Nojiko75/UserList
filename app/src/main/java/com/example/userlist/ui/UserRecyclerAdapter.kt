@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.domain.model.UserFullProfile
+import com.example.domain.model.UserListItem
 import com.example.userlist.R
 import com.example.userlist.databinding.UserItemBinding
 import com.squareup.picasso.Picasso
@@ -15,7 +15,7 @@ class UserRecyclerAdapter(
     val clickListener: UserClickListener
 ) : RecyclerView.Adapter<UserRecyclerAdapter.UserViewHolder>() {
 
-    var userList : List<UserFullProfile> = ArrayList()
+    var userList : List<UserListItem> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
         val inflatedView: UserItemBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.user_item, parent, false)
@@ -28,7 +28,7 @@ class UserRecyclerAdapter(
 
     override fun getItemCount() = userList.size
 
-    fun setUsers(users: List<UserFullProfile>) {
+    fun setUsers(users: List<UserListItem>) {
         this.userList = users
         notifyDataSetChanged()
     }
