@@ -1,8 +1,10 @@
 package com.example.data.util
 
+import com.example.data.api.model.UserFullProfileResponse
 import com.example.data.api.model.UserItem
 import com.example.data.api.model.UserListResponse
 import com.example.data.database.model.UserEntity
+import com.example.domain.model.Location
 
 fun createSuccessUserResponse() : UserListResponse {
     val fiedler = UserItem("0F8JIqi4zwvb77FGz6Wt", "mr", "Heinz-Georg", "Fiedler", "heinz-georg.fiedler@example.com", "https://randomuser.me/api/portraits/men/81.jpg")
@@ -16,4 +18,13 @@ fun createSuccessUserResponse() : UserListResponse {
 
 fun createUserEntities() : List<UserEntity> {
     return createSuccessUserResponse().data.map { it.toUserEntity() }
+}
+
+fun createSuccessUserFullProfileResponse() : UserFullProfileResponse {
+    val location = Location("Timesquare", "New York", "New York", "United States", "009")
+    return UserFullProfileResponse("id", "mr", "John", "Doe", "male", "john.doe@example.com", "1996-04-30T19:26:49.610Z", "555410", "https://picture.png", location, "1996-04-30T19:26:49.610Z", "1996-04-30T19:26:49.610Z")
+}
+
+fun createUserEntity() : UserEntity {
+    return createSuccessUserFullProfileResponse().toUserEntity()
 }

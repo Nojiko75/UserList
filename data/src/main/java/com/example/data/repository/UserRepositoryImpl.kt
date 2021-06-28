@@ -19,15 +19,19 @@ class UserRepositoryImpl (
     override suspend fun getUserList(): Result<List<UserListItem>> {
         if (networkStateManager.hasNetWorkConnection()) {
             return try {
+                // get user list from user API
                 val response = userApi.getUserList()
                 if (response.isSuccessful) {
                     Log.d("REPO", "get users from api")
                     response.body()?.let { userResponse ->
                         Log.d("REPO", "response:$response")
                         val userList = userResponse.data
+                        // convert user API object to user entity
                         val entities = userList.map { it.toUserEntity() }
+                        // save user list in database
                         withContext(Dispatchers.IO) { userDao.addUsers(entities) }
 
+                        // convert user entity to user model
                         val userItemList = entities.map { it.toUserListItem() }
 
                         return Result.Success(userItemList)
@@ -39,6 +43,7 @@ class UserRepositoryImpl (
                 return Result.Failure(e, e.localizedMessage)
             }
         } else {
+            // get user list from database if no network
             val data = withContext(Dispatchers.IO) { userDao.findAllUsers() }
             return if (data.isNotEmpty()) {
                 Log.d("REPO", "get users from db")
@@ -53,15 +58,19 @@ class UserRepositoryImpl (
     override suspend fun getUserFullProfile(userId: String): Result<UserFullProfile> {
         if (networkStateManager.hasNetWorkConnection()) {
             return try {
+                // get user from user API
                 val response = userApi.getUserFullProfile(userId)
                 if (response.isSuccessful) {
                     Log.d("REPO", "get users from api")
                     response.body()?.let { userResponse ->
                         Log.d("REPO", "response:$userResponse")
 
+                        // convert user API object to user entity
                         val userEntity = userResponse.toUserEntity()
+                        // save user data in database
                         withContext(Dispatchers.IO) { userDao.addUserFullProfile(userEntity) }
 
+                        // convert user entity to user model
                         val user = userEntity.toUserFullProfile()
 
                         return Result.Success(user)
@@ -73,11 +82,14 @@ class UserRepositoryImpl (
                 return Result.Failure(e, e.localizedMessage)
             }
         } else {
+            // get user from database if no network
             val data = withContext(Dispatchers.IO) { userDao.getUserById(userId) }
-            return run {
+            return if (data != null) {
                 Log.d("REPO", "get users from db")
                 val user = data.toUserFullProfile()
                 Result.Success(user)
+            } else {
+                Result.Failure(Exception("error"), "no network connection")
             }
         }
     }
