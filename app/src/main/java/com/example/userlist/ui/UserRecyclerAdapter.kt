@@ -49,32 +49,6 @@ class UserRecyclerAdapter(
                 clickListener.onItemClick(item)
             }
         }
-
-        /*private var user: UserFullProfile? = null
-
-        override fun onClick(v: View) {
-            Log.d("RecyclerView", "CLICK!")
-            val context = itemView.context
-            val showUserIntent = Intent(context, UserDetailActivity::class.java)
-            showUserIntent.putExtra(USER_KEY, user)
-            context.startActivity(showUserIntent)
-        }
-
-        fun bindUser(user: UserFullProfile) {
-            this.user = user
-            Picasso.get()
-                .load(user.picture)
-                .placeholder(R.drawable.ic_launcher_foreground)
-                .error(R.drawable.ic_launcher_background)
-                .into(view.picture);
-
-            view.name.text = user.name
-            view.email.text = user.email
-        }
-
-        companion object {
-            private val USER_KEY = "USER"
-        }*/
     }
 
 }
