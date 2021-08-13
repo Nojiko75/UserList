@@ -35,9 +35,6 @@ data class UserItem (
     @SerializedName("lastName")
     @Expose
     val lastName: String,
-    @SerializedName("email")
-    @Expose
-    val email: String,
     @SerializedName("picture")
     @Expose
     val picture: String
@@ -48,7 +45,7 @@ data class UserItem (
         firstName = firstName,
         lastName = lastName,
         gender = null,
-        email = email,
+        email = null,
         dateOfBirth = null,
         registerDate = null,
         phone = null,

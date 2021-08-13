@@ -9,7 +9,7 @@ data class UserFullProfile(
     val id: String,
     val name: String,
     val gender: String?,
-    val email: String,
+    val email: String?,
     val dateOfBirth: String?,
     val registerDate: String?,
     val phone: String?,

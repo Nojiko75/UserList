@@ -8,6 +8,10 @@
         <variable
             name="user"
             type="com.example.domain.model.UserFullProfile" />
+        <variable
+            name="viewModel"
+            type="com.example.userlist.viewmodel.UserViewModel" />
+
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

@@ -14,7 +14,7 @@ data class UserEntity (
     val firstName: String,
     val lastName: String,
     val gender: String?,
-    val email: String,
+    val email: String?,
     val dateOfBirth: String?,
     val registerDate: String?,
     val phone: String?,
@@ -25,7 +25,6 @@ data class UserEntity (
     fun toUserListItem() = UserListItem (
         id = id,
         name = "$title $firstName $lastName",
-        email = email,
         picture = picture
     )
 

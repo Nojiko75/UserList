@@ -16,7 +16,7 @@ val apiModule = module {
             addInterceptor(
                 Interceptor { chain ->
                     val builder = chain.request().newBuilder()
-                    builder.header("app-id", "60cb34dd88c5574db08ec261")
+                    builder.header("app-id", "61154ce1e8ae9f19e7dd7778")
                     return@Interceptor chain.proceed(builder.build())
                 }
             )
@@ -26,7 +26,7 @@ val apiModule = module {
 
     single {
         Retrofit.Builder()
-            .baseUrl("https://dummyapi.io/data/api/")
+            .baseUrl("https://dummyapi.io/data/v1/")
             .client(get())
             .addConverterFactory(GsonConverterFactory.create())
             .build()

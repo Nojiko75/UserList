@@ -6,11 +6,10 @@ import androidx.room.TypeConverters
 import com.example.data.database.converter.LocationConverter
 import com.example.data.database.dao.UserDao
 import com.example.data.database.model.UserEntity
-import com.example.domain.model.Location
 
 @Database(
     entities = [UserEntity::class],
-    version = 4, exportSchema = false
+    version = 5, exportSchema = false
 )
 
 @TypeConverters(LocationConverter::class)
