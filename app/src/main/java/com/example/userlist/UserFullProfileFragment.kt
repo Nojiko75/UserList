@@ -33,6 +33,11 @@ class UserFullProfileFragment  : Fragment() {
                     .error(R.drawable.ic_launcher_background)
                     .into(binding.picture)
 
+                binding.gender.text = setData(binding.user?.gender)
+                binding.email.text = setData(binding.user?.email)
+                binding.phone.text = setData(binding.user?.phone)
+                binding.address.text = setData(binding.user?.location)
+
                 val dateOfBirth = parseDate(binding.user?.dateOfBirth)
                 binding.dateOfBirth.text = dateOfBirth
 
@@ -57,5 +62,12 @@ class UserFullProfileFragment  : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         mViewDataBinding = null
+    }
+
+    private fun setData(data: String?): String {
+        return when {
+            data != null -> data
+            else -> "no data"
+        }
     }
 }

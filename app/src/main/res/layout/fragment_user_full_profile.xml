@@ -64,7 +64,6 @@
         <TextView
             android:id="@+id/gender"
             style="@style/normal_text"
-            android:text="@{user.gender}"
             app:layout_constraintTop_toBottomOf="@id/name"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/gender_text"
@@ -115,7 +114,6 @@
 
         <TextView
             android:id="@+id/email"
-            android:text="@{user.email}"
             style="@style/normal_text"
             app:layout_constraintTop_toBottomOf="@id/register_date_text"
             app:layout_constraintEnd_toEndOf="parent"
@@ -133,7 +131,6 @@
 
         <TextView
             android:id="@+id/phone"
-            android:text="@{user.phone}"
             style="@style/normal_text"
             app:layout_constraintTop_toBottomOf="@id/email_text"
             app:layout_constraintEnd_toEndOf="parent"
@@ -151,7 +148,6 @@
 
         <TextView
             android:id="@+id/address"
-            android:text="@{user.location}"
             style="@style/normal_text"
             android:layout_width="0dp"
             app:layout_constraintRight_toRightOf="parent"
